@@ -12,8 +12,6 @@ public class GreentingController {
 
     private static final String template = "Hello, %s!";
 
-    private static final String obj = "Carro, %s";
-
     // Gerar um Id
     private final AtomicLong counter = new AtomicLong();
 
@@ -21,8 +19,5 @@ public class GreentingController {
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "Word") String name){
         return  new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
-    @RequestMapping("/nova")
-    public Greeting gre(@RequestParam(value ="produto", defaultValue = "Valor") String produto ){
-        return new Greeting(counter.incrementAndGet(), String.format(obj, produto));
-    }
+
 }

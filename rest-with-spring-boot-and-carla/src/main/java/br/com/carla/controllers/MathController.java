@@ -8,21 +8,66 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/math")
 public class MathController {
 
+    // http://localhost:8080/math/sum/8/2
     @RequestMapping("/sum/{numberOne}/{numberTwo}")
     public Double sum(
             @PathVariable("numberOne") String numberOne,
             @PathVariable("numberTwo") String numberTwo
     ) throws Exception {
-        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new IllegalAccessException();
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedOperationException("só é permitido número!");
         return convertToDouble(numberOne) + convertToDouble(numberTwo);
     }
 
-    private Double convertToDouble(String strNumber) throws IllegalAccessException {
+    // http://localhost:8080/math/subtraction/8/2
+    @RequestMapping("/subtraction/{numberOne}/{numberTwo}")
+    public Double subtraction(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo
+    ) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedOperationException("Erro no subtraction");
+        return convertToDouble(numberOne) - convertToDouble(numberTwo);
+    }
 
+    @RequestMapping("/multiplication/{numberOne}/{numberTwo}")
+    public Double multiplication(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo
+    ) throws Exception {
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedOperationException("Erro no multiplication");
+        return convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
+
+    @RequestMapping("/dividi/{numberOne}/{numberTwo}")
+    public Double dividi(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo
+    ) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedOperationException("Erro no Dividi");
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+
+    @RequestMapping("/mean/{numberOne}/{numberTwo}")
+    public Double mean(
+            @PathVariable("numberOne") String numberOne,
+            @PathVariable("numberTwo") String numberTwo
+    ) throws Exception {
+        if (!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedOperationException("Erro no Mean");
+        return (convertToDouble(numberOne) + convertToDouble(numberTwo)) / 2;
+    }
+
+    @RequestMapping("/squareroot/{number}")
+    public Double squareRoot(
+            @PathVariable("number") String number
+    ) throws Exception {
+        if (!isNumeric(number)) throw new UnsupportedOperationException("Erro no SquareRoot");
+        return Math.sqrt(convertToDouble(number));
+    }
+
+
+    private Double convertToDouble(String strNumber) throws IllegalAccessException {
         if (strNumber == null || strNumber.isEmpty()) throw new IllegalAccessException();
         String number = strNumber.replace(",", ".");
         return Double.parseDouble(number);
-
     }
 
     private boolean isNumeric(String strNumber) {
@@ -30,6 +75,5 @@ public class MathController {
         String number = strNumber.replace(",", ".");
         return number.matches("[-+]?[0-9]*\\.?[0-9]+");
     }
-
 
 }
