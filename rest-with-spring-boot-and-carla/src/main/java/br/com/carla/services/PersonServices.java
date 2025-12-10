@@ -52,7 +52,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGende(person.getGende());
 
-        return repository.save(entity);
+        return repository.save(person);
 
     }
 
