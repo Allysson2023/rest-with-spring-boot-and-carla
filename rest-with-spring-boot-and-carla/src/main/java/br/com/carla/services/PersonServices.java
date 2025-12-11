@@ -1,6 +1,9 @@
 package br.com.carla.services;
 
+import br.com.carla.data.dto.PersonDTO;
 import br.com.carla.exception.ResouerceNotFoundException;
+import static br.com.carla.mapper.ObjectMapper.parseListObjects;
+import static br.com.carla.mapper.ObjectMapper.parseObjects;
 import br.com.carla.model.Person;
 import br.com.carla.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,28 +22,30 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findByAll(){
+    public List<PersonDTO> findByAll(){
         logger.info("findByAll on Person!");
 
-        return repository.findAll();
+        return parseListObjects(repository.findAll(), PersonDTO.class);
     }
 
-    public Person findById(Long id){
+    public PersonDTO findById(Long id){
         logger.info("findById on Person!");
 
-        return repository.findById(id)
+        var entity = repository.findById(id)
                 .orElseThrow(()-> new ResouerceNotFoundException("No records Found id..."));
+        return parseObjects(entity, PersonDTO.class);
     }
 
 
-    public Person create(Person person){
+    public PersonDTO create(PersonDTO person){
         logger.info("Create on Person!");
+        var entity = parseObjects(person, Person.class);
 
-        return repository.save(person);
+        return parseObjects(repository.save(entity), PersonDTO.class);
 
     }
 
-    public Person update(Person person){
+    public PersonDTO update(PersonDTO person){
         logger.info("update on Person!");
 
 
@@ -52,7 +57,7 @@ public class PersonServices {
         entity.setAddress(person.getAddress());
         entity.setGende(person.getGende());
 
-        return repository.save(person);
+        return parseObjects(repository.save(entity), PersonDTO.class);
 
     }
 
