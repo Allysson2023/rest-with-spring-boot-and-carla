@@ -1,6 +1,4 @@
-package br.com.carla.data.dto;
-
-import jakarta.persistence.*;
+package br.com.carla.data.dto.v1;
 
 import java.io.Serializable;
 import java.util.Objects;

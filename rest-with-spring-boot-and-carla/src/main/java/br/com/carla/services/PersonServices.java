@@ -1,9 +1,12 @@
 package br.com.carla.services;
 
-import br.com.carla.data.dto.PersonDTO;
+import br.com.carla.data.dto.v1.PersonDTO;
+import br.com.carla.data.dto.v2.PersonDTOV2;
 import br.com.carla.exception.ResouerceNotFoundException;
 import static br.com.carla.mapper.ObjectMapper.parseListObjects;
 import static br.com.carla.mapper.ObjectMapper.parseObjects;
+
+import br.com.carla.mapper.custom.PersonMapper;
 import br.com.carla.model.Person;
 import br.com.carla.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +24,9 @@ public class PersonServices {
 
     @Autowired
     PersonRepository repository;
+
+    @Autowired
+    PersonMapper converter;
 
     public List<PersonDTO> findByAll(){
         logger.info("findByAll on Person!");
@@ -42,6 +48,15 @@ public class PersonServices {
         var entity = parseObjects(person, Person.class);
 
         return parseObjects(repository.save(entity), PersonDTO.class);
+
+    }
+
+    // DTOV2 -> novo campo
+    public PersonDTOV2 createV2(PersonDTOV2 person){
+        logger.info("Create on Person V2!");
+        var entity = converter.convertDTOtoEntity(person);
+
+        return converter.convertEntityToDTO(repository.save(entity));
 
     }
 

@@ -1,6 +1,7 @@
 package br.com.carla.controllers;
 
-import br.com.carla.data.dto.PersonDTO;
+import br.com.carla.data.dto.v1.PersonDTO;
+import br.com.carla.data.dto.v2.PersonDTOV2;
 import br.com.carla.services.PersonServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -33,6 +34,14 @@ public class PersonControllers {
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public PersonDTO create(@RequestBody PersonDTO person){
         return services.create(person);
+    }
+
+    // Este é o DTOV2 do versionamento da Apis, novo campo
+    @PostMapping(value = "/v2",
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public PersonDTOV2 create(@RequestBody PersonDTOV2 person){
+        return services.createV2(person);
     }
 
     @PutMapping(
