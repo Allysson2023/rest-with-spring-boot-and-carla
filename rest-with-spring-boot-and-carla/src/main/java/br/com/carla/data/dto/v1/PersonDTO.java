@@ -16,7 +16,7 @@ import java.util.Objects;
 
 // mostra as ordem dos campo dos json
 //@JsonPropertyOrder({"id","sobrenome","nome", "endereço", "gende"})
-@JsonFilter("PersonFilter")
+//@JsonFilter("PersonFilter")
 public class PersonDTO implements Serializable {
 
     private static final long serialVersionUIS = 1L;
@@ -24,13 +24,13 @@ public class PersonDTO implements Serializable {
     private Long id;
     private String nome;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    //@JsonInclude(JsonInclude.Include.NON_NULL)
     private String sobrenome;
 
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    //@JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String phoneNumber;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    //@JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthDay;
 
     // formata o nome, deixa o jeito que voce deseja o nome:
@@ -39,7 +39,7 @@ public class PersonDTO implements Serializable {
 
     // ignora o campo do json
     //@JsonIgnore
-    @JsonSerialize(using = GenderSerializer.class)
+    //@JsonSerialize(using = GenderSerializer.class)
     private String gende;
 
 
