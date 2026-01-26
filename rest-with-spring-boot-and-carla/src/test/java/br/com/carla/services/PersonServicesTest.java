@@ -1,6 +1,7 @@
 package br.com.carla.services;
 
 import br.com.carla.data.dto.v1.PersonDTO;
+import br.com.carla.exception.RequiredObjectIsNullException;
 import br.com.carla.model.Person;
 import br.com.carla.repository.PersonRepository;
 import br.com.carla.unitetests.mapper.mocks.MockPerson;
@@ -134,6 +135,30 @@ class PersonServicesTest {
     }
 
     @Test
+    void testCreateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                ()-> {
+                    services.create(null);
+                } );
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    void testUpdateWithNullPerson() {
+        Exception exception = assertThrows(RequiredObjectIsNullException.class,
+                ()-> {
+                    services.update(null);
+                } );
+
+        String expectedMessage = "It is not allowed to persist a null object!";
+        String actualMessage = exception.getMessage();
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
     void update() {
         Person person = input.mockEntity(1);
         Person persisted = person;
@@ -193,7 +218,7 @@ class PersonServicesTest {
         services.delete(1L);
         verify(repository, times(1)).findById(anyLong());
         verify(repository, times(1)).delete(any(Person.class));
-        verifyNoInteractions(repository);
+        verifyNoMoreInteractions(repository);
     }
 
     @Test

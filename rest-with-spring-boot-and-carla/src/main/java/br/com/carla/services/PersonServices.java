@@ -3,6 +3,7 @@ package br.com.carla.services;
 import br.com.carla.controllers.PersonControllers;
 import br.com.carla.data.dto.v1.PersonDTO;
 import br.com.carla.data.dto.v2.PersonDTOV2;
+import br.com.carla.exception.RequiredObjectIsNullException;
 import br.com.carla.exception.ResouerceNotFoundException;
 import static br.com.carla.mapper.ObjectMapper.parseListObjects;
 import static br.com.carla.mapper.ObjectMapper.parseObjects;
@@ -52,6 +53,9 @@ public class PersonServices {
 
 
     public PersonDTO create(PersonDTO person){
+
+        if (person == null) throw new RequiredObjectIsNullException();
+
         logger.info("Create on Person!");
         var entity = parseObjects(person, Person.class);
 
@@ -70,6 +74,7 @@ public class PersonServices {
 
     }
     public PersonDTO update(PersonDTO person){
+        if (person == null) throw new RequiredObjectIsNullException();
         logger.info("update on Person!");
 
 
