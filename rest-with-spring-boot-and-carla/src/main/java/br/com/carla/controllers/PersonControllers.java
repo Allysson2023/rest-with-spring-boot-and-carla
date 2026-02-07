@@ -2,13 +2,7 @@ package br.com.carla.controllers;
 
 import br.com.carla.controllers.docs.PersonControllersDocs;
 import br.com.carla.data.dto.v1.PersonDTO;
-import br.com.carla.data.dto.v2.PersonDTOV2;
-import br.com.carla.services.PersonServices;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import br.com.carla.unittests.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

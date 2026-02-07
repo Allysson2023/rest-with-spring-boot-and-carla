@@ -2,7 +2,7 @@ package br.com.carla.controllers;
 
 import br.com.carla.controllers.docs.BookControllersDocs;
 import br.com.carla.data.dto.BookDTO;
-import br.com.carla.services.BookServices;
+import br.com.carla.unittests.services.BookServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
