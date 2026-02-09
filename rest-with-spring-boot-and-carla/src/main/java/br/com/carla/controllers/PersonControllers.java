@@ -2,7 +2,7 @@ package br.com.carla.controllers;
 
 import br.com.carla.controllers.docs.PersonControllersDocs;
 import br.com.carla.data.dto.v1.PersonDTO;
-import br.com.carla.unittests.services.PersonServices;
+import br.com.carla.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//@CrossOrigin(origins = "http://localhost:8080")
 @RestController
 @RequestMapping("/api/person/v1")
 @Tag(name="People", description = "Endpoints for Managing People")
@@ -28,6 +29,7 @@ public class PersonControllers implements PersonControllersDocs {
     }
 
 
+//    @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(value = "{id}",
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
     @Override
@@ -38,6 +40,7 @@ public class PersonControllers implements PersonControllersDocs {
     }
 
 
+//    @CrossOrigin(origins = {"http://localhost:8080", "https://www.erudio.com.br"})
     @PostMapping(
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE},
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})

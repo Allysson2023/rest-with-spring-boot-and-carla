@@ -4,6 +4,7 @@ import br.com.carla.data.dto.v1.PersonDTO;
 import br.com.carla.exception.RequiredObjectIsNullException;
 import br.com.carla.model.Person;
 import br.com.carla.repository.PersonRepository;
+import br.com.carla.services.PersonServices;
 import br.com.carla.unittests.mapper.mocks.MockPerson;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ class PersonServicesTest {
     MockPerson input;
 
     @InjectMocks
-    private  PersonServices services;
+    private PersonServices services;
 
     @Mock
     PersonRepository repository;
