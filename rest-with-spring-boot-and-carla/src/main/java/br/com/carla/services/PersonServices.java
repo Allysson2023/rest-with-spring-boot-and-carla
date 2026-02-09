@@ -14,6 +14,7 @@ import br.com.carla.repository.PersonRepository;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -101,11 +102,27 @@ public class PersonServices {
         repository.delete(entity);
     }
 
+    @Transactional
+    public PersonDTO disablePerson(Long id){
+        logger.info("disable on Person!");
+
+        repository.findById(id)
+                .orElseThrow(()-> new ResouerceNotFoundException("No records Found id..."));
+
+        repository.disablePerson(id);
+
+        var entity = repository.findById(id).get();
+        var dto = parseObjects((entity), PersonDTO.class);
+        addHateoasLinks(dto);
+        return dto;
+    }
+
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonControllers.class).findById(dto.getId())).withSelfRel().withType("GET"));
         dto.add(linkTo(methodOn(PersonControllers.class).findByAll()).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonControllers.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonControllers.class).update(dto)).withRel("update").withType("PUT"));
+        dto.add(linkTo(methodOn(PersonControllers.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
         dto.add(linkTo(methodOn(PersonControllers.class).delete(dto.getId())).withRel("delete").withType("DELETE"));
     }
 

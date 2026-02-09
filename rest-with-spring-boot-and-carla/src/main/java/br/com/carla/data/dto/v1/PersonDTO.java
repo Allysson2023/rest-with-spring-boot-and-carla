@@ -24,24 +24,12 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
 
     private Long id;
     private String nome;
-
-    //@JsonInclude(JsonInclude.Include.NON_NULL)
     private String sobrenome;
-
-    //@JsonInclude(JsonInclude.Include.NON_EMPTY)
     private String phoneNumber;
-
-    //@JsonFormat(pattern = "dd/MM/yyyy")
     private Date birthDay;
-
-    // formata o nome, deixa o jeito que voce deseja o nome:
-    //@JsonProperty("endereço")
     private String address;
-
-    // ignora o campo do json
-    //@JsonIgnore
-    //@JsonSerialize(using = GenderSerializer.class)
     private String gende;
+    private Boolean enabled;
 
 
     private String sensitiveData;
@@ -112,24 +100,24 @@ public class PersonDTO extends RepresentationModel<PersonDTO> implements Seriali
         this.sensitiveData = sensitiveData;
     }
 
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonDTO personDTO)) return false;
-        return Objects.equals(getId(),
-                personDTO.getId()) && Objects.equals(getNome(),
-                personDTO.getNome()) && Objects.equals(getSobrenome(),
-                personDTO.getSobrenome()) && Objects.equals(getPhoneNumber(),
-                personDTO.getPhoneNumber()) && Objects.equals(getBirthDay(),
-                personDTO.getBirthDay()) && Objects.equals(getAddress(),
-                personDTO.getAddress()) && Objects.equals(getGende(), personDTO.getGende())
-                && Objects.equals(getSensitiveData(), personDTO.getSensitiveData());
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        PersonDTO personDTO = (PersonDTO) o;
+        return Objects.equals(getId(), personDTO.getId()) && Objects.equals(getNome(), personDTO.getNome()) && Objects.equals(getSobrenome(), personDTO.getSobrenome()) && Objects.equals(getPhoneNumber(), personDTO.getPhoneNumber()) && Objects.equals(getBirthDay(), personDTO.getBirthDay()) && Objects.equals(getAddress(), personDTO.getAddress()) && Objects.equals(getGende(), personDTO.getGende()) && Objects.equals(getEnabled(), personDTO.getEnabled()) && Objects.equals(getSensitiveData(), personDTO.getSensitiveData());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(),
-                getNome(), getSobrenome(),
-                getPhoneNumber(), getBirthDay(),
-                getAddress(), getGende(), getSensitiveData());
+        return Objects.hash(super.hashCode(), getId(), getNome(), getSobrenome(), getPhoneNumber(), getBirthDay(), getAddress(), getGende(), getEnabled(), getSensitiveData());
     }
 }
