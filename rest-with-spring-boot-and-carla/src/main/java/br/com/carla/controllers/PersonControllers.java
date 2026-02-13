@@ -5,11 +5,12 @@ import br.com.carla.data.dto.v1.PersonDTO;
 import br.com.carla.services.PersonServices;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 //@CrossOrigin(origins = "http://localhost:8080")
 @RestController
@@ -24,8 +25,15 @@ public class PersonControllers implements PersonControllersDocs {
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_YAML_VALUE})
 
     @Override
-    public List<PersonDTO> findByAll(){
-        return services.findByAll();
+    public ResponseEntity<Page<PersonDTO>> findByAll(
+
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "size", defaultValue = "12") Integer size
+
+    ) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(services.findByAll(pageable));
     }
 
 

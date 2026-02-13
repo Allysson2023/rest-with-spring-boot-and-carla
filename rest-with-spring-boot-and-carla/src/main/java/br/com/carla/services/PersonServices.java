@@ -16,9 +16,11 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -34,12 +36,17 @@ public class PersonServices {
     @Autowired
     PersonMapper converter;
 
-    public List<PersonDTO> findByAll(){
+    public Page<PersonDTO> findByAll(Pageable pageable){
         logger.info("findByAll on Person!");
 
-        var persons = parseListObjects(repository.findAll(), PersonDTO.class);
-        persons.forEach(this::addHateoasLinks);
-        return persons;
+        var people = repository.findAll(pageable);
+
+        var peopleWithLinks = people.map(person -> {
+            var dto = parseObjects(person, PersonDTO.class);
+            addHateoasLinks(dto);
+            return dto;
+        });
+        return peopleWithLinks;
     }
 
     public PersonDTO findById(Long id){
@@ -119,7 +126,7 @@ public class PersonServices {
 
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonControllers.class).findById(dto.getId())).withSelfRel().withType("GET"));
-        dto.add(linkTo(methodOn(PersonControllers.class).findByAll()).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonControllers.class).findByAll(1, 12)).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonControllers.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonControllers.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(PersonControllers.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
