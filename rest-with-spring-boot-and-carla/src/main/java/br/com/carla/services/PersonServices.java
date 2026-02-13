@@ -126,7 +126,7 @@ public class PersonServices {
 
     private void addHateoasLinks(PersonDTO dto) {
         dto.add(linkTo(methodOn(PersonControllers.class).findById(dto.getId())).withSelfRel().withType("GET"));
-        dto.add(linkTo(methodOn(PersonControllers.class).findByAll(1, 12)).withRel("findAll").withType("GET"));
+        dto.add(linkTo(methodOn(PersonControllers.class).findByAll(1, 12, "asc")).withRel("findAll").withType("GET"));
         dto.add(linkTo(methodOn(PersonControllers.class).create(dto)).withRel("create").withType("POST"));
         dto.add(linkTo(methodOn(PersonControllers.class).update(dto)).withRel("update").withType("PUT"));
         dto.add(linkTo(methodOn(PersonControllers.class).disablePerson(dto.getId())).withRel("disable").withType("PATCH"));
